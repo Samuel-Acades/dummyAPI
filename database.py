@@ -3,15 +3,20 @@ import databases
 import sqlalchemy
 from dotenv import load_dotenv
 
-# This looks for the .env file in your folder
+# load_dotenv is fine for local, but Render will use Environment Variables
 load_dotenv()
 
-# Pull the string from the .env file
 DATABASE_URL = os.getenv("DATABASE_URL")
 
-# Supabase strings sometimes start with 'postgres://' 
-# but asyncpg requires 'postgresql://'
-if DATABASE_URL and DATABASE_URL.startswith("postgres://"):
+# Check if the URL actually exists before trying to use it
+if not DATABASE_URL:
+    # This will show up in your Render logs so you know exactly what happened
+    print("CRITICAL ERROR: DATABASE_URL not found in environment variables!")
+    # Use a dummy string so the app doesn't crash during build, 
+    # but it will fail gracefully during startup
+    DATABASE_URL = "postgresql://user:pass@localhost/dummy"
+
+if DATABASE_URL.startswith("postgres://"):
     DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
 
 database = databases.Database(DATABASE_URL)
