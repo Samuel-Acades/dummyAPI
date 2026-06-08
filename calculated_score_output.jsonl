@@ -1,0 +1,9 @@
+{'credit_score': 588, 
+'credit_tier': 'FAIR', 
+'risk_assessment': 'Moderate Risk Parameters', 
+'payment_history_grade': 90.0, 
+'utilization_grade': 10.0, 
+'history_length_grade': 25.0, 
+'financial_capacity_grade': 65.0, 
+'generated_at': '2026-06-08T12:00:58.525940'
+}
